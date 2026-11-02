@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Liga | Sitio Oficial</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        },
+                        basketball: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .glass-panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 1px solid #fed7aa;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(234, 88, 12, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(234, 88, 12, 0.6);
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- ====================================================== -->
+    <!-- DATOS DE LA LIGA — EDITA SOLAMENTE ESTA SECCIÓN -->
+    <!-- ====================================================== -->
+    <script>
+        const LIGA_DATA = {
+            nombre: "Liga",
+            temporada: "Temporada 2026",
+            subtitulo: "Estadísticas oficiales de la liga",
+            
+            // Enlace de la página oficial de Facebook (déjalo vacío "" si aún no tienes el enlace)
+            facebookUrl: "", 
+
+            // ======================================================
+            // 🏀 EQUIPOS Y JUGADORES
+            // ======================================================
+            equipos: [
+                { id: 1, nombre: "Rangers", abreviatura: "RAN", ciudad: "Cajeme", color: "#3b82f6" },
+                { id: 2, nombre: "Lobos", abreviatura: "LOB", ciudad: "Ciudad Obregón", color: "#ef4444" },
+                { id: 3, nombre: "Titanes", abreviatura: "TIT", ciudad: "Esperanza", color: "#f59e0b" },
+                { id: 4, nombre: "Warriors", abreviatura: "WAR", ciudad: "Cajeme", color: "#8b5cf6" },
+                { id: 5, nombre: "Halcones", abreviatura: "HAL", ciudad: "Cócorit", color: "#10b981" },
+                { id: 6, nombre: "Panteras", abreviatura: "PAN", ciudad: "Providencia", color: "#ec4899" }
+            ],
+
+            jugadores: [
+                // Rangers
+                { id: 1, nombre: "Juan Pérez", numero: 23, posicion: "Alero", equipo: "Rangers" },
+                { id: 2, nombre: "Carlos López", numero: 7, posicion: "Base", equipo: "Rangers" },
+                { id: 3, nombre: "Diego Martínez", numero: 15, posicion: "Ala-pívot", equipo: "Rangers" },
+                { id: 4, nombre: "Mario Soto", numero: 10, posicion: "Escolta", equipo: "Rangers" },
+                { id: 5, nombre: "Alejandro Ruiz", numero: 33, posicion: "Pívot", equipo: "Rangers" },
+                { id: 6, nombre: "Fernando Valenzuela", numero: 4, posicion: "Base", equipo: "Rangers" },
+
+                // Lobos
+                { id: 7, nombre: "Marco Antonio Solís", numero: 11, posicion: "Base", equipo: "Lobos" },
+                { id: 8, nombre: "Héctor Beltrán", numero: 32, posicion: "Pívot", equipo: "Lobos" },
+                { id: 9, nombre: "Gabriel Cárdenas", numero: 9, posicion: "Alero", equipo: "Lobos" },
+                { id: 10, nombre: "Raúl Mendívil", numero: 21, posicion: "Escolta", equipo: "Lobos" },
+                { id: 11, nombre: "Ernesto Duarte", numero: 55, posicion: "Ala-pívot", equipo: "Lobos" },
+                { id: 12, nombre: "Iván Cota", numero: 14, posicion: "Base", equipo: "Lobos" },
+
+                // Titanes
+                { id: 13, nombre: "Sergio 'Checo' Romo", numero: 0, posicion: "Base", equipo: "Titanes" },
+                { id: 14, nombre: "Ricardo Olea", numero: 24, posicion: "Alero", equipo: "Titanes" },
+                { id: 15, nombre: "Jorge Leyva", numero: 50, posicion: "Pívot", equipo: "Titanes" },
+                { id: 16, nombre: "Oscar Barraza", numero: 8, posicion: "Escolta", equipo: "Titanes" },
+                { id: 17, nombre: "Adrián Morán", numero: 12, posicion: "Ala-pívot", equipo: "Titanes" },
+
+                // Warriors
+                { id: 18, nombre: "Daniel Monge", numero: 6, posicion: "Escolta", equipo: "Warriors" },
+                { id: 19, nombre: "Francisco Javier", numero: 30, posicion: "Base", equipo: "Warriors" },
+                { id: 20, nombre: "Armando Garza", numero: 22, posicion: "Pívot", equipo: "Warriors" },
+                { id: 21, nombre: "Jesús Alcaraz", numero: 13, posicion: "Alero", equipo: "Warriors" },
+                { id: 22, nombre: "Ramón Verdugo", numero: 45, posicion: "Ala-pívot", equipo: "Warriors" },
+
+                // Halcones
+                { id: 23, nombre: "Luis Enrique Meza", numero: 1, posicion: "Base", equipo: "Halcones" },
+                { id: 24, nombre: "Salvador Zazueta", numero: 17, posicion: "Alero", equipo: "Halcones" },
+                { id: 25, nombre: "Alfonso Quintero", numero: 35, posicion: "Pívot", equipo: "Halcones" },
+                { id: 26, nombre: "Rubén Darío", numero: 99, posicion: "Escolta", equipo: "Halcones" },
+                { id: 27, nombre: "Guillermo Páez", numero: 20, posicion: "Ala-pívot", equipo: "Halcones" },
+
+                // Panteras
+                { id: 28, nombre: "Humberto Buitimea", numero: 5, posicion: "Base", equipo: "Panteras" },
+                { id: 29, nombre: "Esteban Yocupicio", numero: 91, posicion: "Alero", equipo: "Panteras" },
+                { id: 30, nombre: "Mauricio Borboa", numero: 34, posicion: "Pívot", equipo: "Panteras" },
+                { id: 31, nombre: "Abelardo Navojoa", numero: 19, posicion: "Escolta", equipo: "Panteras" },
+                { id: 32, nombre: "Gilberto Tajia", numero: 44, posicion: "Ala-pívot", equipo: "Panteras" }
+            ],
+
+            // ======================================================
+            // 📅 REGISTRAR Y PROGRAMAR PARTIDOS
+            // ======================================================
+            // ======================================================
+            // 📝 REGISTRAR RESULTADOS DE LOS PARTIDOS
+            // ======================================================
+            partidos: [
+                // Jornada 1 (Fechas y horarios preparados para completar)
+                { id: 1, jornada: 1, fecha: "Por definir", dia: "Martes", hora: "7:00 PM", local: "Rangers", visitante: "Warriors", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 2, jornada: 1, fecha: "Por definir", dia: "Miércoles", hora: "8:00 PM", local: "Lobos", visitante: "Titanes", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 3, jornada: 1, fecha: "Por definir", dia: "Jueves", hora: "9:00 PM", local: "Halcones", visitante: "Panteras", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 2 (Fechas y horarios preparados para completar)
+                { id: 4, jornada: 2, fecha: "Por definir", dia: "Martes", hora: "7:00 PM", local: "Warriors", visitante: "Lobos", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 5, jornada: 2, fecha: "Por definir", dia: "Miércoles", hora: "8:00 PM", local: "Titanes", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 6, jornada: 2, fecha: "Por definir", dia: "Jueves", hora: "9:00 PM", local: "Panteras", visitante: "Rangers", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 3 (Fechas y horarios preparados para completar)
+                { id: 7, jornada: 3, fecha: "Por definir", dia: "Martes", hora: "7:00 PM", local: "Rangers", visitante: "Lobos", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 8, jornada: 3, fecha: "Por definir", dia: "Miércoles", hora: "8:00 PM", local: "Titanes", visitante: "Panteras", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 9, jornada: 3, fecha: "Por definir", dia: "Jueves", hora: "9:00 PM", local: "Halcones", visitante: "Warriors", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 4 (Fechas y horarios preparados para completar)
+                { id: 10, jornada: 4, fecha: "Por definir", dia: "Martes", hora: "7:00 PM", local: "Lobos", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 11, jornada: 4, fecha: "Por definir", dia: "Miércoles", hora: "8:00 PM", local: "Warriors", visitante: "Titanes", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 12, jornada: 4, fecha: "Por definir", dia: "Jueves", hora: "9:00 PM", local: "Panteras", visitante: "Rangers", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 5 (Fechas y horarios preparados para completar)
+                { id: 13, jornada: 5, fecha: "Por definir", dia: "Martes", hora: "7:00 PM", local: "Rangers", visitante: "Titanes", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 14, jornada: 5, fecha: "Por definir", dia: "Miércoles", hora: "8:00 PM", local: "Lobos", visitante: "Panteras", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 15, jornada: 5, fecha: "Por definir", dia: "Jueves", hora: "9:00 PM", local: "Warriors", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 6 (Pendiente)
+                { id: 16, jornada: 6, fecha: "10/11/2026", dia: "Martes", hora: "7:00 PM", local: "Warriors", visitante: "Rangers", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 17, jornada: 6, fecha: "11/11/2026", dia: "Miércoles", hora: "8:00 PM", local: "Titanes", visitante: "Lobos", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 18, jornada: 6, fecha: "12/11/2026", dia: "Jueves", hora: "9:00 PM", local: "Panteras", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 7 (Pendiente)
+                { id: 19, jornada: 7, fecha: "17/11/2026", dia: "Martes", hora: "7:00 PM", local: "Lobos", visitante: "Warriors", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 20, jornada: 7, fecha: "18/11/2026", dia: "Miércoles", hora: "8:00 PM", local: "Halcones", visitante: "Titanes", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 21, jornada: 7, fecha: "19/11/2026", dia: "Jueves", hora: "9:00 PM", local: "Rangers", visitante: "Panteras", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 8 (Pendiente)
+                { id: 22, jornada: 8, fecha: "24/11/2026", dia: "Martes", hora: "7:00 PM", local: "Rangers", visitante: "Lobos", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 23, jornada: 8, fecha: "25/11/2026", dia: "Miércoles", hora: "8:00 PM", local: "Panteras", visitante: "Titanes", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 24, jornada: 8, fecha: "26/11/2026", dia: "Jueves", hora: "9:00 PM", local: "Warriors", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 9 (Pendiente)
+                { id: 25, jornada: 9, fecha: "01/12/2026", dia: "Martes", hora: "7:00 PM", local: "Halcones", visitante: "Lobos", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 26, jornada: 9, fecha: "02/12/2026", dia: "Miércoles", hora: "8:00 PM", local: "Titanes", visitante: "Warriors", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 27, jornada: 9, fecha: "03/12/2026", dia: "Jueves", hora: "9:00 PM", local: "Rangers", visitante: "Halcones", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+
+                // Jornada 10 (Pendiente)
+                { id: 28, jornada: 10, fecha: "08/12/2026", dia: "Martes", hora: "7:00 PM", local: "Lobos", visitante: "Rangers", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 29, jornada: 10, fecha: "09/12/2026", dia: "Miércoles", hora: "8:00 PM", local: "Titanes", visitante: "Panteras", estado: "pendiente", puntosLocal: null, puntosVisitante: null },
+                { id: 30, jornada: 10, fecha: "10/12/2026", dia: "Jueves", hora: "9:00 PM", local: "Halcones", visitante: "Warriors", estado: "pendiente", puntosLocal: null, puntosVisitante: null }
+            ],
+
+            // ======================================================
+            // 🏀 REGISTRAR LOS PUNTOS DE LOS JUGADORES
+            // ======================================================
+            puntosJugadoresPartidos: [
+                // Todos los registros de puntos se han reiniciado a cero para la nueva temporada
+            ],
+
+            // ======================================================
+            // 🏆 REGISTRAR LOS MVP DE CADA JORNADA
+            // ======================================================
+            mvpJornadas: [
+                // Todos los premios MVP se han reiniciado para la nueva temporada
+            ]
+        };
+    </script>
+
+    <!-- ========================================== -->
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <!-- ========================================== -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="cambiarVista('inicio')">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center shadow-md shadow-orange-600/20 text-white font-black text-xl sm:text-2xl">
+                        🏀
+                    </div>
+                    <div>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest text-orange-600 font-extrabold">Sitio Oficial</span>
+                        <h1 class="text-base sm:text-2xl font-black tracking-tight text-slate-900">LIGA</h1>
+                    </div>
+                </div>
+
+                <!-- Barra de búsqueda global (Desktop) -->
+                <div class="hidden md:flex items-center space-x-4 flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                            🔍
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Buscar jugador, equipo..." oninput="handleGlobalSearch(this.value, false)"
+                            class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all">
+                        
+                        <!-- Resultados de búsqueda rápida escritorio -->
+                        <div id="searchResults" class="absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden hidden z-50 max-h-96 overflow-y-auto"></div>
+                    </div>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-100 text-slate-700">
+                        ☰
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegación por Secciones (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-1 py-3 border-t border-slate-200 overflow-x-auto">
+                <button onclick="cambiarVista('inicio')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-orange-600 bg-orange-500/10" data-view="inicio">🏠 Inicio</button>
+                <button onclick="cambiarVista('equipos')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="equipos">🏀 Equipos</button>
+                <button onclick="cambiarVista('jugadores')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="jugadores">👥 Jugadores</button>
+                <button onclick="cambiarVista('estadisticas')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="estadisticas">📊 Estadísticas</button>
+                <button onclick="cambiarVista('mvp')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="mvp">🏆 MVP</button>
+                <button onclick="cambiarVista('jornadas')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="jornadas">📅 Jornadas</button>
+                <button onclick="cambiarVista('clasificacion')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="clasificacion">🥇 Clasificación</button>
+                <button onclick="cambiarVista('informacion')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100" data-view="informacion">ℹ️ Información</button>
+            </nav>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pt-3 pb-5 space-y-2 bg-white border-t border-slate-200 shadow-xl">
+            <div class="mb-3 pt-1 relative">
+                <input type="text" placeholder="Buscar jugador, equipo..." oninput="handleGlobalSearch(this.value, true)"
+                    class="w-full px-4 py-2.5 bg-slate-100 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <!-- Resultados de búsqueda móvil -->
+                <div id="mobileSearchResults" class="absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden hidden z-50 max-h-80 overflow-y-auto"></div>
+            </div>
+            <button onclick="cambiarVista('inicio'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">🏠 Inicio</button>
+            <button onclick="cambiarVista('equipos'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">🏀 Equipos</button>
+            <button onclick="cambiarVista('jugadores'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">👥 Jugadores</button>
+            <button onclick="cambiarVista('estadisticas'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">📊 Estadísticas</button>
+            <button onclick="cambiarVista('mvp'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">🏆 MVP</button>
+            <button onclick="cambiarVista('jornadas'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">📅 Jornadas</button>
+            <button onclick="cambiarVista('clasificacion'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">🥇 Clasificación</button>
+            <button onclick="cambiarVista('informacion'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">ℹ️ Información</button>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ========================================== -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-12">
+
+        <!-- 1. VISTA INICIO -->
+        <section id="vista-inicio" class="space-y-8 sm:space-y-12 fade-in">
+            <!-- HERO SECTION -->
+            <div class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-12 hero-gradient shadow-xl">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600 border border-orange-500/30 mb-4">
+                        ⚡ Temporada Oficial 2026
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-4">
+                        LIGA
+                    </h2>
+                    <p class="text-base sm:text-xl text-slate-600 mb-6 sm:mb-8 font-medium">
+                        Estadísticas oficiales de la liga, calendarios, clasificación y perfiles de jugadores en tiempo real.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <button onclick="cambiarVista('clasificacion')" class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg shadow-orange-600/30 transition-all flex items-center justify-center space-x-2">
+                            <span>Ver Clasificación</span>
+                            <span>🏆</span>
+                        </button>
+                        <button onclick="cambiarVista('estadisticas')" class="px-6 py-3 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-xl border border-slate-300 transition-all flex items-center justify-center space-x-2">
+                            <span>Líderes y Stats</span>
+                            <span>📊</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats flotantes en el Hero -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-200">
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200 text-center sm:text-left">
+                        <span class="text-2xl sm:text-4xl font-black text-orange-600" id="statEquiposCount">6</span>
+                        <p class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-500 mt-1 font-semibold">Equipos</p>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200 text-center sm:text-left">
+                        <span class="text-2xl sm:text-4xl font-black text-orange-600" id="statJugadoresCount">32</span>
+                        <p class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-500 mt-1 font-semibold">Jugadores</p>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200 text-center sm:text-left">
+                        <span class="text-2xl sm:text-4xl font-black text-orange-600" id="statJornadasCount">10</span>
+                        <p class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-500 mt-1 font-semibold">Jornadas</p>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-slate-200 text-center sm:text-left">
+                        <span class="text-2xl sm:text-4xl font-black text-orange-600" id="statPartidosCount">0</span>
+                        <p class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-500 mt-1 font-semibold">Partidos Jugados</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LÍDER DE PUNTOS -->
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Destacado</span>
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">🔥 Líder Anotador de la Liga</h3>
+                    </div>
+                    <button onclick="cambiarVista('estadisticas')" class="text-sm font-semibold text-orange-600 hover:underline flex items-center space-x-1">
+                        <span>Ver tabla completa</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                <div id="lideresGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                    <!-- Generado dinámicamente -->
+                </div>
+            </div>
+
+            <!-- TOP 10 ANOTADORES & ÚLTIMOS RESULTADOS -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Top 10 Anotadores -->
+                <div class="lg:col-span-1 glass-panel rounded-3xl p-5 sm:p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-black text-slate-900 flex items-center space-x-2">
+                            <span>🎯 Top 10 Anotadores</span>
+                        </h3>
+                    </div>
+                    <div id="top10List" class="space-y-3">
+                        <!-- Generado dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Últimos Resultados y Clasificación rápida -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="glass-panel rounded-3xl p-5 sm:p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-black text-slate-900 flex items-center space-x-2">
+                                <span>📅 Últimos Resultados</span>
+                            </h3>
+                            <button onclick="cambiarVista('jornadas')" class="text-sm font-semibold text-orange-600 hover:underline">Ver todas</button>
+                        </div>
+                        <div id="ultimosResultadosList" class="space-y-4">
+                            <!-- Generado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Clasificación Breve -->
+                    <div class="glass-panel rounded-3xl p-5 sm:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-black text-slate-900 flex items-center space-x-2">
+                                <span>🥇 Tabla de Posiciones</span>
+                            </h3>
+                            <button onclick="cambiarVista('clasificacion')" class="text-sm font-semibold text-orange-600 hover:underline">Ver tabla</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm whitespace-nowrap" id="tablaClasificacionBreve">
+                                <!-- Generado dinámicamente -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. VISTA EQUIPOS -->
+        <section id="vista-equipos" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Franquicias</span>
+                    <h2 class="text-3xl font-black text-slate-900">Equipos de la Liga</h2>
+                </div>
+                <p class="text-sm text-slate-500">Selecciona un equipo para ver su plantilla completa y estadísticas</p>
+            </div>
+            <div id="equiposGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Generado dinámicamente -->
+            </div>
+        </section>
+
+        <!-- 3. VISTA JUGADORES -->
+        <section id="vista-jugadores" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Directorio</span>
+                    <h2 class="text-3xl font-black text-slate-900">Jugadores Registrados</h2>
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto">
+                    <select id="filtroEquipoJugadores" onchange="renderJugadores()" class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="todos">Todos los equipos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="relative">
+                <input type="text" id="busquedaJugadoresInput" placeholder="Buscar por nombre, apellido, número o equipo..." oninput="renderJugadores()"
+                    class="w-full px-4 py-3 pl-11 bg-white border border-slate-300 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🔍</span>
+            </div>
+            <div id="jugadoresGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Generado dinámicamente -->
+            </div>
+        </section>
+
+        <!-- 4. VISTA ESTADÍSTICAS -->
+        <section id="vista-estadisticas" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Rendimiento</span>
+                    <h2 class="text-3xl font-black text-slate-900">Estadísticas Generales</h2>
+                </div>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+                    <label class="text-sm text-slate-500">Ordenar por:</label>
+                    <select id="selectOrdenEstadisticas" onchange="cambiarOrdenEstadisticas(this.value)" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="puntos">Puntos Totales (PTS)</option>
+                        <option value="ppg">Puntos por Partido (PPG)</option>
+                        <option value="mvp">MVP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="glass-panel rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse whitespace-nowrap" id="tablaEstadisticasCompletas">
+                        <!-- Generado dinámicamente -->
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. VISTA MVP -->
+        <section id="vista-mvp" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Reconocimientos</span>
+                    <h2 class="text-3xl font-black text-slate-900">MVP de la Jornada</h2>
+                </div>
+                <div class="flex items-center space-x-2 overflow-x-auto pb-2 w-full sm:w-auto" id="mvpJornadaSelectors">
+                    <!-- Generado dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Tarjeta destacada MVP -->
+            <div id="mvpDetalleContainer" class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-xl border-orange-500/35">
+                <!-- Generado dinámicamente -->
+            </div>
+
+            <!-- MVPs de la temporada (Ranking) -->
+            <div class="space-y-4 pt-4">
+                <h3 class="text-2xl font-black text-slate-900 flex items-center space-x-2">
+                    <span>👑 MVPs Acumulados en la Temporada</span>
+                </h3>
+                <div id="mvpTemporadaList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Generado dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. VISTA JORNADAS -->
+        <section id="vista-jornadas" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Calendario</span>
+                    <h2 class="text-3xl font-black text-slate-900">Jornadas y Partidos</h2>
+                </div>
+                <div class="flex items-center space-x-2 overflow-x-auto pb-2 w-full sm:w-auto" id="jornadasSelectors">
+                    <!-- Generado dinámicamente -->
+                </div>
+            </div>
+            <div id="jornadasPartidosContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Generado dinámicamente -->
+            </div>
+        </section>
+
+        <!-- 7. VISTA CLASIFICACIÓN -->
+        <section id="vista-clasificacion" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Posiciones</span>
+                    <h2 class="text-3xl font-black text-slate-900">Clasificación General</h2>
+                </div>
+                <p class="text-sm text-slate-500">Ordenada por puntos de clasificación (Victoria = 2 pts, Derrota = 1 pt)</p>
+            </div>
+            <div class="glass-panel rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse whitespace-nowrap" id="tablaClasificacionCompleta">
+                        <!-- Generado dinámicamente -->
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. VISTA INFORMACIÓN DE LA LIGA -->
+        <section id="vista-informacion" class="space-y-8 hidden fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">Sede y Enlaces</span>
+                    <h2 class="text-3xl font-black text-slate-900">Información de la Liga</h2>
+                </div>
+                <p class="text-sm text-slate-500">Conoce nuestra ubicación oficial y canales de contacto</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Ubicación de la cancha -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center font-bold text-xl">📍</div>
+                        <div>
+                            <span class="text-xs uppercase font-extrabold text-orange-600">Sede Oficial</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-slate-900">Cancha de Básquetbol #4</h3>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Esta es la sede oficial donde se disputan todos los encuentros y emocionantes jornadas de la Liga. ¡Te esperamos para apoyar a tu equipo favorito!
+                    </p>
+                    <div class="w-full h-72 sm:h-96 rounded-2xl overflow-hidden shadow-md border border-slate-200">
+    
+                    </div>
+                </div>
+
+                <!-- Página oficial de Facebook -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-xl">📘</div>
+                            <div>
+                                <span class="text-xs uppercase font-extrabold text-blue-600">Redes Sociales</span>
+                                <h3 class="text-xl sm:text-2xl font-black text-slate-900">Página Oficial de Facebook</h3>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Sigue todas las transmisiones en vivo, galerías de fotos, avisos oficiales y noticias de la Liga en nuestra página oficial de Facebook.
+                        </p>
+                    </div>
+                    <div id="facebookSection" class="pt-6 border-t border-slate-200">
+                        <!-- Generado dinámicamente según LIGA_DATA.facebookUrl -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE PERFIL DE JUGADOR -->
+    <!-- ========================================== -->
+    <div id="modalJugador" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md hidden fade-in">
+        <div class="glass-panel w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalJugador()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center text-lg font-bold transition-colors">
+                ✕
+            </button>
+            <div id="modalJugadorContent">
+                <!-- Generado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE DETALLE DE EQUIPO -->
+    <!-- ========================================== -->
+    <div id="modalEquipo" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md hidden fade-in">
+        <div class="glass-panel w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalEquipo()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center text-lg font-bold transition-colors">
+                ✕
+            </button>
+            <div id="modalEquipoContent">
+                <!-- Generado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FOOTER -->
+    <!-- ========================================== -->
+    <footer class="mt-20 border-t border-slate-200 bg-white py-8 text-center text-slate-500 text-sm">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-800">LIGA — Sitio Oficial de Estadísticas</p>
+            <p>Desarrollado por NNWEBSTUDIO. Todos los derechos reservados © 2026. V1.5</p>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT DE LÓGICA Y RENDERIZADO -->
+    <!-- ========================================== -->
+    <script>
+        // Estado actual de la aplicación
+        let vistaActual = 'inicio';
+        let ordenEstadisticasActual = 'puntos';
+        let jornadaSeleccionadaMVP = 1;
+        let jornadaSeleccionadaPartidos = 1;
+
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarTodo();
+            setupFiltrosEquipos();
+        });
+
+        // Cambiar entre vistas
+        function cambiarVista(vista) {
+            vistaActual = vista;
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            const secActiva = document.getElementById(`vista-${vista}`);
+            if (secActiva) secActiva.classList.remove('hidden');
+
+            // Actualizar botones de navegación escritorio
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.view === vista) {
+                    btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-orange-600 bg-orange-500/10";
+                } else {
+                    btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // ========================================== -->
+        // FUNCIONES DE ESTADÍSTICAS Y CÁLCULOS AUTOMÁTICOS
+        // ========================================== -->
+
+        // Obtener jugadores enriquecidos con puntos y partidos calculados exclusivamente a partir de partidos finalizados
+        function getJugadores() {
+            const partidosFinalizadosIds = LIGA_DATA.partidos
+                .filter(p => p.estado === 'finalizado')
+                .map(p => p.id);
+
+            return LIGA_DATA.jugadores.map(j => {
+                const registrosValidos = LIGA_DATA.puntosJugadoresPartidos.filter(r => 
+                    r.jugador.toLowerCase() === j.nombre.toLowerCase() && 
+                    partidosFinalizadosIds.includes(r.partidoId)
+                );
+
+                const partidosMap = {};
+                registrosValidos.forEach(r => {
+                    if (!partidosMap[r.partidoId]) {
+                        partidosMap[r.partidoId] = 0;
+                    }
+                    partidosMap[r.partidoId] += r.puntos;
+                });
+
+                const partidosIds = Object.keys(partidosMap);
+                const partidos = partidosIds.length;
+                const puntos = partidosIds.reduce((sum, pid) => sum + partidosMap[pid], 0);
+
+                return {
+                    ...j,
+                    puntos,
+                    partidos
+                };
+            });
+        }
+        
+        // Calcular MVPs automáticamente a partir de mvpJornadas
+        function calcularMVPsJugador(nombreJugador) {
+            return LIGA_DATA.mvpJornadas.filter(m => m.jugador.toLowerCase() === nombreJugador.toLowerCase()).length;
+        }
+
+        // Utilidad: Generar avatar / iniciales
+        function getAvatarHTML(nombre, color = '#f97316', size = 'w-12 h-12') {
+            const initials = nombre.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+            return `<div class="${size} rounded-2xl flex items-center justify-center font-black text-white shadow-md flex-shrink-0" style="background: linear-gradient(135deg, ${color}, #0f172a)">${initials}</div>`;
+        }
+
+        // Utilidad: Calcular PPG
+        function calcularPPG(puntos, partidos) {
+            if (!partidos || partidos === 0) return '0.0';
+            return (puntos / partidos).toFixed(1);
+        }
+
+        // Renderizador maestro
+        function renderizarTodo() {
+            renderHeroStats();
+            renderLideres();
+            renderTop10();
+            renderUltimosResultados();
+            renderClasificacionBreve();
+            renderEquipos();
+            renderJugadores();
+            renderEstadisticasCompletas();
+            renderMVPSection();
+            renderJornadasSection();
+            renderClasificacionCompleta();
+            renderInformacionLiga();
+        }
+
+        // 1. Render Hero Stats
+        function renderHeroStats() {
+            document.getElementById('statEquiposCount').textContent = LIGA_DATA.equipos.length;
+            document.getElementById('statJugadoresCount').textContent = LIGA_DATA.jugadores.length;
+            document.getElementById('statJornadasCount').textContent = 10;
+            const partidosJugadosCount = LIGA_DATA.partidos.filter(p => p.estado === 'finalizado').length;
+            document.getElementById('statPartidosCount').textContent = partidosJugadosCount;
+        }
+
+        // 2. Render Líder de la Liga (Puntos)
+        function renderLideres() {
+            const jugadores = getJugadores();
+            if (!jugadores.length) {
+                document.getElementById('lideresGrid').innerHTML = `<div class="glass-panel p-6 rounded-3xl text-center text-slate-500">Aún no hay estadísticas registradas para la nueva temporada.</div>`;
+                return;
+            }
+
+            const liderPuntos = [...jugadores].sort((a, b) => b.puntos - a.puntos)[0];
+            if (!liderPuntos || liderPuntos.puntos === 0) {
+                document.getElementById('lideresGrid').innerHTML = `<div class="glass-panel p-6 rounded-3xl text-center text-slate-500">Aún no hay partidos finalizados en la temporada.</div>`;
+                return;
+            }
+
+            const container = document.getElementById('lideresGrid');
+            container.innerHTML = `
+                <div class="glass-panel p-6 rounded-3xl hover:border-orange-500/50 transition-all group cursor-pointer flex items-center justify-between" onclick="abrirPerfilJugador(${liderPuntos.id})">
+                    <div class="flex items-center space-x-4">
+                        ${getAvatarHTML(liderPuntos.nombre, '#f97316', 'w-16 h-16')}
+                        <div>
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-orange-600">🏀 Máximo Anotador</span>
+                            <h4 class="font-black text-slate-900 text-lg sm:text-2xl mt-1">${liderPuntos.nombre}</h4>
+                            <p class="text-sm text-slate-500">${liderPuntos.equipo} • #${liderPuntos.numero} • ${liderPuntos.posicion}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl sm:text-4xl font-black text-orange-600">${liderPuntos.puntos} PTS</span>
+                        <p class="text-xs font-semibold text-slate-500">${calcularPPG(liderPuntos.puntos, liderPuntos.partidos)} PPG</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. Render Top 10 Anotadores
+        function renderTop10() {
+            const top10 = [...getJugadores()].sort((a, b) => b.puntos - a.puntos).slice(0, 10);
+            const container = document.getElementById('top10List');
+            if (top10.every(j => j.puntos === 0)) {
+                container.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">Sin anotadores registrados.</div>`;
+                return;
+            }
+            container.innerHTML = top10.map((j, index) => `
+                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer" onclick="abrirPerfilJugador(${j.id})">
+                    <div class="flex items-center space-x-3 min-w-0">
+                        <span class="w-6 text-center font-black text-sm flex-shrink-0 ${index === 0 ? 'text-amber-500 text-lg' : index === 1 ? 'text-slate-400' : index === 2 ? 'text-amber-700' : 'text-slate-500'}">#${index + 1}</span>
+                        <div class="min-w-0">
+                            <h5 class="font-bold text-sm text-slate-900 truncate">${j.nombre}</h5>
+                            <p class="text-xs text-slate-500 truncate">${j.equipo} • #${j.numero}</p>
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0 pl-2">
+                        <span class="font-black text-orange-600 text-sm">${j.puntos} PTS</span>
+                        <p class="text-[10px] text-slate-400">${calcularPPG(j.puntos, j.partidos)} PPG</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 4. Render Últimos Resultados (Solo partidos finalizados)
+        function renderUltimosResultados() {
+            const partidosFinalizados = LIGA_DATA.partidos.filter(p => p.estado === 'finalizado');
+            const ultimos = [...partidosFinalizados].slice(-4).reverse();
+            const container = document.getElementById('ultimosResultadosList');
+            if (ultimos.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">No hay resultados finalizados registrados en esta temporada.</div>`;
+                return;
+            }
+            container.innerHTML = ultimos.map(p => {
+                const ganadorLocal = p.puntosLocal > p.puntosVisitante;
+                return `
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs sm:text-sm">
+                        <div class="flex-1 text-right pr-2 sm:pr-4 min-w-0">
+                            <span class="font-bold truncate block ${ganadorLocal ? 'text-slate-900' : 'text-slate-500'}">${p.local}</span>
+                            <div class="text-[10px] text-slate-400">Jornada ${p.jornada}</div>
+                        </div>
+                        <div class="px-3 sm:px-4 py-1.5 rounded-xl bg-white border border-slate-200 font-black text-orange-600 text-sm sm:text-base tracking-wider shadow-inner flex-shrink-0">
+                            ${p.puntosLocal} - ${p.puntosVisitante}
+                        </div>
+                        <div class="flex-1 text-left pl-2 sm:pl-4 min-w-0">
+                            <span class="font-bold truncate block ${!ganadorLocal ? 'text-slate-900' : 'text-slate-500'}">${p.visitante}</span>
+                            <div class="text-[10px] text-slate-400 truncate">${ganadorLocal ? 'Victoria local' : 'Victoria visitante'}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Calcular Clasificación ordenada por PUNTOS (Victoria = 2 pts, Derrota = 1 pt) - Ignorando pendientes
+        function calcularClasificacion() {
+            const stats = {};
+            LIGA_DATA.equipos.forEach(eq => {
+                stats[eq.nombre] = {
+                    nombre: eq.nombre,
+                    abreviatura: eq.abreviatura,
+                    color: eq.color,
+                    pj: 0,
+                    pg: 0,
+                    pp: 0,
+                    pf: 0,
+                    pc: 0,
+                    dif: 0,
+                    puntos: 0
+                };
+            });
+
+            LIGA_DATA.partidos.forEach(p => {
+                if (p.estado === 'finalizado' && stats[p.local] && stats[p.visitante]) {
+                    // Local
+                    stats[p.local].pj++;
+                    stats[p.local].pf += p.puntosLocal;
+                    stats[p.local].pc += p.puntosVisitante;
+
+                    // Visitante
+                    stats[p.visitante].pj++;
+                    stats[p.visitante].pf += p.puntosVisitante;
+                    stats[p.visitante].pc += p.puntosLocal;
+
+                    if (p.puntosLocal > p.puntosVisitante) {
+                        stats[p.local].pg++;
+                        stats[p.visitante].pp++;
+                    } else if (p.puntosVisitante > p.puntosLocal) {
+                        stats[p.visitante].pg++;
+                        stats[p.local].pp++;
+                    }
+                }
+            });
+
+            Object.values(stats).forEach(s => {
+                s.dif = s.pf - s.pc;
+                s.puntos = (s.pg * 2) + (s.pp * 1);
+            });
+
+            return Object.values(stats).sort((a, b) => {
+                if (b.puntos !== a.puntos) return b.puntos - a.puntos;
+                if (b.dif !== a.dif) return b.dif - a.dif;
+                return b.pf - a.pf;
+            });
+        }
+
+        // 5. Render Clasificación Breve (Inicio)
+        function renderClasificacionBreve() {
+            const clasificacion = calcularClasificacion().slice(0, 4);
+            const container = document.getElementById('tablaClasificacionBreve');
+            container.innerHTML = `
+                <thead>
+                    <tr class="text-xs text-slate-500 border-b border-slate-200">
+                        <th class="py-2">POS</th>
+                        <th class="py-2">EQUIPO</th>
+                        <th class="py-2 text-center">PJ</th>
+                        <th class="py-2 text-center">PG</th>
+                        <th class="py-2 text-center">PP</th>
+                        <th class="py-2 text-right font-black text-orange-600">PUNTOS</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    ${clasificacion.map((eq, index) => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-2.5 font-black text-orange-600">#${index + 1}</td>
+                            <td class="py-2.5 font-bold text-slate-900 flex items-center space-x-2">
+                                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background: ${eq.color}"></span>
+                                <span class="truncate max-w-[120px] sm:max-w-none">${eq.nombre}</span>
+                            </td>
+                            <td class="py-2.5 text-center text-slate-600">${eq.pj}</td>
+                            <td class="py-2.5 text-center text-slate-800 font-bold">${eq.pg}</td>
+                            <td class="py-2.5 text-center text-slate-500">${eq.pp}</td>
+                            <td class="py-2.5 text-right font-black text-orange-600">${eq.puntos}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+        }
+
+        // 6. Render Equipos
+        function renderEquipos() {
+            const container = document.getElementById('equiposGrid');
+            const jugadores = getJugadores();
+            container.innerHTML = LIGA_DATA.equipos.map(eq => {
+                const jugadoresEq = jugadores.filter(j => j.equipo === eq.nombre);
+                const puntosTotales = jugadoresEq.reduce((acc, j) => acc + j.puntos, 0);
+                const mvpsTotales = jugadoresEq.reduce((acc, j) => acc + calcularMVPsJugador(j.nombre), 0);
+                return `
+                    <div class="glass-panel p-5 sm:p-6 rounded-3xl hover:border-orange-500/50 transition-all group cursor-pointer flex flex-col justify-between" onclick="abrirDetalleEquipo('${eq.nombre}')">
+                        <div>
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-black text-xl sm:text-2xl text-white shadow-md flex-shrink-0" style="background: linear-gradient(135deg, ${eq.color}, #0f172a)">
+                                    ${eq.abreviatura}
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="text-xs uppercase font-extrabold text-orange-600">${eq.ciudad}</span>
+                                    <h3 class="text-lg sm:text-xl font-black text-slate-900 group-hover:text-orange-600 transition-colors truncate">${eq.nombre}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-4 border-t border-slate-200 text-center">
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-base sm:text-lg font-black text-slate-900">${jugadoresEq.length}</span>
+                                <p class="text-[9px] sm:text-[10px] text-slate-500 uppercase">Plantilla</p>
+                            </div>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-base sm:text-lg font-black text-orange-600">${puntosTotales}</span>
+                                <p class="text-[9px] sm:text-[10px] text-slate-500 uppercase">PTS Equipo</p>
+                            </div>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-base sm:text-lg font-black text-emerald-600">${mvpsTotales}</span>
+                                <p class="text-[9px] sm:text-[10px] text-slate-500 uppercase">MVPs</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Setup filtros de equipos en jugadores
+        function setupFiltrosEquipos() {
+            const select = document.getElementById('filtroEquipoJugadores');
+            if (!select) return;
+            select.innerHTML = '<option value="todos">Todos los equipos</option>' + 
+                LIGA_DATA.equipos.map(eq => `<option value="${eq.nombre}">${eq.nombre}</option>`).join('');
+        }
+
+        // 7. Render Jugadores
+        function renderJugadores() {
+            const filtroEquipo = document.getElementById('filtroEquipoJugadores')?.value || 'todos';
+            const textoBusqueda = document.getElementById('busquedaJugadoresInput')?.value.toLowerCase() || '';
+
+            let jugadoresFiltrados = getJugadores().filter(j => {
+                const matchEquipo = filtroEquipo === 'todos' || j.equipo === filtroEquipo;
+                const matchTexto = j.nombre.toLowerCase().includes(textoBusqueda) || 
+                                   j.numero.toString().includes(textoBusqueda) || 
+                                   j.equipo.toLowerCase().includes(textoBusqueda) ||
+                                   j.posicion.toLowerCase().includes(textoBusqueda);
+                return matchEquipo && matchTexto;
+            });
+
+            const container = document.getElementById('jugadoresGrid');
+            if (jugadoresFiltrados.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500">No se encontraron jugadores con los filtros seleccionados.</div>`;
+                return;
+            }
+
+            container.innerHTML = jugadoresFiltrados.map(j => `
+                <div class="glass-panel p-4 sm:p-5 rounded-3xl hover:border-orange-500/50 transition-all group cursor-pointer flex flex-col justify-between" onclick="abrirPerfilJugador(${j.id})">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-orange-500/10 text-orange-600 border border-orange-500/30">#${j.numero}</span>
+                            <span class="text-xs text-slate-500 font-semibold">${j.posicion}</span>
+                        </div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            ${getAvatarHTML(j.nombre, '#f97316', 'w-12 h-12 sm:w-14 sm:h-14')}
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors text-sm sm:text-base truncate">${j.nombre}</h4>
+                                <p class="text-xs text-slate-500 font-medium truncate">${j.equipo}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-200 text-center">
+                        <div>
+                            <span class="text-xs sm:text-sm font-black text-orange-600">${j.puntos} PTS</span>
+                            <p class="text-[9px] text-slate-400 uppercase">Totales</p>
+                        </div>
+                        <div>
+                            <span class="text-xs sm:text-sm font-black text-slate-800">${calcularPPG(j.puntos, j.partidos)}</span>
+                            <p class="text-[9px] text-slate-400 uppercase">PPG</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 8. Render Estadísticas Completas
+        function cambiarOrdenEstadisticas(orden) {
+            ordenEstadisticasActual = orden;
+            renderEstadisticasCompletas();
+        }
+
+        function renderEstadisticasCompletas() {
+            let jugadores = [...getJugadores()];
+            
+            jugadores.sort((a, b) => {
+                if (ordenEstadisticasActual === 'puntos') return b.puntos - a.puntos;
+                if (ordenEstadisticasActual === 'ppg') return (b.puntos/b.partidos || 0) - (a.puntos/a.partidos || 0);
+                if (ordenEstadisticasActual === 'mvp') return calcularMVPsJugador(b.nombre) - calcularMVPsJugador(a.nombre);
+                return b.puntos - a.puntos;
+            });
+
+            const container = document.getElementById('tablaEstadisticasCompletas');
+            container.innerHTML = `
+                <thead>
+                    <tr class="text-xs uppercase text-slate-500 border-b border-slate-200 bg-slate-100">
+                        <th class="py-3 px-4">POS</th>
+                        <th class="py-3 px-4">JUGADOR</th>
+                        <th class="py-3 px-4">EQUIPO</th>
+                        <th class="py-3 px-4 text-center">PJ</th>
+                        <th class="py-3 px-4 text-center">PTS</th>
+                        <th class="py-3 px-4 text-center">PPG</th>
+                        <th class="py-3 px-4 text-center">MVP</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    ${jugadores.map((j, index) => {
+                        const mvps = calcularMVPsJugador(j.nombre);
+                        return `
+                            <tr class="hover:bg-slate-50 cursor-pointer transition-colors" onclick="abrirPerfilJugador(${j.id})">
+                                <td class="py-3 px-4 font-black text-orange-600">#${index + 1}</td>
+                                <td class="py-3 px-4 font-bold text-slate-900 flex items-center space-x-3">
+                                    <span class="text-xs text-slate-500 font-semibold w-6">#${j.numero}</span>
+                                    <span class="truncate max-w-[140px] sm:max-w-none">${j.nombre}</span>
+                                </td>
+                                <td class="py-3 px-4 text-slate-600 font-medium">${j.equipo}</td>
+                                <td class="py-3 px-4 text-center text-slate-600">${j.partidos}</td>
+                                <td class="py-3 px-4 text-center font-black text-orange-600">${j.puntos}</td>
+                                <td class="py-3 px-4 text-center text-slate-800 font-bold">${calcularPPG(j.puntos, j.partidos)}</td>
+                                <td class="py-3 px-4 text-center font-bold text-amber-500">${mvps > 0 ? mvps : '-'}</td>
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            `;
+        }
+
+        // 9. Render MVP Section
+        function renderMVPSection() {
+            const jornadasMVP = LIGA_DATA.mvpJornadas;
+            const selectorsContainer = document.getElementById('mvpJornadaSelectors');
+            
+            selectorsContainer.innerHTML = [1, 2, 3, 4, 5].map(j => `
+                <button onclick="seleccionarJornadaMVP(${j})" class="px-4 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${jornadaSeleccionadaMVP === j ? 'bg-orange-600 text-white shadow-md shadow-orange-600/30' : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'}">
+                    Jornada ${j}
+                </button>
+            `).join('');
+
+            const mvpActual = jornadasMVP.find(m => m.jornada === jornadaSeleccionadaMVP);
+            const container = document.getElementById('mvpDetalleContainer');
+            
+            if (!mvpActual) {
+                container.innerHTML = `
+                    <div class="text-center py-8 space-y-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-black bg-amber-500/10 text-amber-600 border border-amber-500/30">
+                            🏆 JORNADA ${jornadaSeleccionadaMVP}
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-900">Sin MVP registrado</h3>
+                        <p class="text-slate-500 text-sm">Aún no se ha disputado o asignado el MVP para esta jornada.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+                        <div class="space-y-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-black bg-amber-500/10 text-amber-600 border border-amber-500/30">
+                                🏆 MVP JORNADA ${mvpActual.jornada}
+                            </span>
+                            <h3 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900">${mvpActual.jugador}</h3>
+                            <p class="text-base sm:text-lg font-bold text-orange-600">${mvpActual.equipo}</p>
+                            <p class="text-slate-600 max-w-xl text-sm sm:text-base italic">"${mvpActual.motivo}"</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 sm:p-6 rounded-2xl text-center border border-slate-200 min-w-[140px]">
+                            <span class="text-3xl sm:text-4xl font-black text-orange-600">${mvpActual.puntos}</span>
+                            <p class="text-xs uppercase text-slate-500 font-bold mt-1">PTS ANOTADOS</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Render MVPs Temporada calculados automáticamente
+            const mvpConteo = {};
+            getJugadores().forEach(j => {
+                const totalMvp = calcularMVPsJugador(j.nombre);
+                if (totalMvp > 0) {
+                    mvpConteo[j.nombre] = { nombre: j.nombre, equipo: j.equipo, mvps: totalMvp };
+                }
+            });
+            const mvpList = Object.values(mvpConteo).sort((a, b) => b.mvps - a.mvps);
+            const temporadaContainer = document.getElementById('mvpTemporadaList');
+            if (mvpList.length === 0) {
+                temporadaContainer.innerHTML = `<div class="col-span-full text-xs text-slate-500 text-center py-4">No hay premios MVP acumulados aún.</div>`;
+                return;
+            }
+            temporadaContainer.innerHTML = mvpList.map(m => `
+                <div class="glass-panel p-5 rounded-3xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3 min-w-0">
+                        ${getAvatarHTML(m.nombre, '#f59e0b', 'w-12 h-12')}
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-slate-900 text-sm sm:text-base truncate">${m.nombre}</h4>
+                            <p class="text-xs text-slate-500 truncate">${m.equipo}</p>
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0 pl-2">
+                        <span class="text-xl sm:text-2xl font-black text-amber-500">👑 ${m.mvps}</span>
+                        <p class="text-[10px] text-slate-500 uppercase">Premios MVP</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function seleccionarJornadaMVP(j) {
+            jornadaSeleccionadaMVP = j;
+            renderMVPSection();
+        }
+
+        // 10. Render Jornadas Section (Soporta partidos finalizados y pendientes)
+        function renderJornadasSection() {
+            const jornadas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            const selectorsContainer = document.getElementById('jornadasSelectors');
+            
+            selectorsContainer.innerHTML = jornadas.map(j => `
+                <button onclick="seleccionarJornadaPartidos(${j})" class="px-4 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${jornadaSeleccionadaPartidos === j ? 'bg-orange-600 text-white shadow-md shadow-orange-600/30' : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'}">
+                    Jornada ${j}
+                </button>
+            `).join('');
+
+            const partidosJornada = LIGA_DATA.partidos.filter(p => p.jornada === jornadaSeleccionadaPartidos);
+            const container = document.getElementById('jornadasPartidosContainer');
+            
+            container.innerHTML = partidosJornada.map(p => {
+                if (p.estado === 'pendiente') {
+                    return `
+                        <div class="glass-panel p-5 sm:p-6 rounded-3xl flex flex-col justify-between space-y-4 border border-amber-500/20">
+                            <div class="flex items-center justify-between text-xs text-slate-500 font-bold uppercase tracking-wider">
+                                <span>Jornada ${p.jornada}</span>
+                                <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/30">PENDIENTE</span>
+                            </div>
+                            <div class="text-center py-2">
+                                <h4 class="font-black text-lg sm:text-xl text-slate-900">${p.local} <span class="text-orange-600 font-normal text-sm">vs</span> ${p.visitante}</h4>
+                            </div>
+                            <div class="text-center pt-3 border-t border-slate-200 text-xs text-slate-600 font-semibold space-y-1">
+                                <div>📅 ${p.fecha} (${p.dia})</div>
+                                <div class="text-orange-600 font-bold">🕖 ${p.hora}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const ganadorLocal = p.puntosLocal > p.puntosVisitante;
+                    return `
+                        <div class="glass-panel p-5 sm:p-6 rounded-3xl flex flex-col justify-between space-y-4">
+                            <div class="flex items-center justify-between text-xs text-slate-500 font-bold uppercase tracking-wider">
+                                <span>Jornada ${p.jornada}</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-orange-600">Finalizado</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1 text-center min-w-0 pr-2">
+                                    <h4 class="font-bold text-sm sm:text-base truncate ${ganadorLocal ? 'text-slate-900' : 'text-slate-500'}">${p.local}</h4>
+                                </div>
+                                <div class="px-3 sm:px-4 py-2 rounded-2xl bg-slate-50 border border-slate-200 font-black text-orange-600 text-lg sm:text-xl tracking-widest shadow-inner flex-shrink-0">
+                                    ${p.puntosLocal} - ${p.puntosVisitante}
+                                </div>
+                                <div class="flex-1 text-center min-w-0 pl-2">
+                                    <h4 class="font-bold text-sm sm:text-base truncate ${!ganadorLocal ? 'text-slate-900' : 'text-slate-500'}">${p.visitante}</h4>
+                                </div>
+                            </div>
+                            <div class="text-center pt-3 border-t border-slate-200 text-xs text-slate-500 font-semibold truncate">
+                                Ganador: <span class="text-slate-800 font-bold">${ganadorLocal ? p.local : p.visitante}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function seleccionarJornadaPartidos(j) {
+            jornadaSeleccionadaPartidos = j;
+            renderJornadasSection();
+        }
+
+        // 11. Render Clasificación Completa (Ordenada por PUNTOS de clasificación)
+        function renderClasificacionCompleta() {
+            const clasificacion = calcularClasificacion();
+            const container = document.getElementById('tablaClasificacionCompleta');
+            container.innerHTML = `
+                <thead>
+                    <tr class="text-xs uppercase text-slate-500 border-b border-slate-200 bg-slate-100">
+                        <th class="py-3 px-4">POS</th>
+                        <th class="py-3 px-4">EQUIPO</th>
+                        <th class="py-3 px-4 text-center">PJ</th>
+                        <th class="py-3 px-4 text-center">PG</th>
+                        <th class="py-3 px-4 text-center">PP</th>
+                        <th class="py-3 px-4 text-center">PF</th>
+                        <th class="py-3 px-4 text-center">PC</th>
+                        <th class="py-3 px-4 text-right">DIF</th>
+                        <th class="py-3 px-4 text-right font-black text-orange-600">PUNTOS</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    ${clasificacion.map((eq, index) => `
+                        <tr class="hover:bg-slate-50 transition-colors cursor-pointer" onclick="abrirDetalleEquipo('${eq.nombre}')">
+                            <td class="py-3 px-4 font-black text-orange-600">#${index + 1}</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 flex items-center space-x-3">
+                                <span class="w-3 h-3 rounded-full flex-shrink-0" style="background: ${eq.color}"></span>
+                                <span class="truncate max-w-[140px] sm:max-w-none">${eq.nombre}</span>
+                            </td>
+                            <td class="py-3 px-4 text-center text-slate-600">${eq.pj}</td>
+                            <td class="py-3 px-4 text-center text-slate-800 font-bold">${eq.pg}</td>
+                            <td class="py-3 px-4 text-center text-slate-500">${eq.pp}</td>
+                            <td class="py-3 px-4 text-center text-slate-600">${eq.pf}</td>
+                            <td class="py-3 px-4 text-center text-slate-600">${eq.pc}</td>
+                            <td class="py-3 px-4 text-right font-black ${eq.dif >= 0 ? 'text-emerald-600' : 'text-red-600'}">${eq.dif > 0 ? '+' + eq.dif : eq.dif}</td>
+                            <td class="py-3 px-4 text-right font-black text-orange-600 text-base">${eq.puntos}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+        }
+
+        // 12. Render Información de la Liga (Facebook URL dinámica)
+        function renderInformacionLiga() {
+            const fbContainer = document.getElementById('facebookSection');
+            if (!fbContainer) return;
+
+            if (LIGA_DATA.facebookUrl && LIGA_DATA.facebookUrl.trim() !== "") {
+                fbContainer.innerHTML = `
+                    <a href="${LIGA_DATA.facebookUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-3 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/30 transition-all text-sm sm:text-base">
+                        <span class="text-xl">📘</span>
+                        <span>Visita nuestra página de Facebook</span>
+                    </a>
+                `;
+            } else {
+                fbContainer.innerHTML = `
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-500 text-sm italic">
+                        Próximamente se habilitará el enlace directo a nuestra página oficial de Facebook.
+                    </div>
+                `;
+            }
+        }
+
+        // Buscador Global
+        function handleGlobalSearch(query, isMobile = false) {
+            const containerId = isMobile ? 'mobileSearchResults' : 'searchResults';
+            let dropdown = document.getElementById(containerId);
+            
+            if (!dropdown && !isMobile) {
+                const searchInput = document.getElementById('searchInput');
+                dropdown = document.createElement('div');
+                dropdown.id = 'searchResults';
+                dropdown.className = 'absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden hidden z-50 max-h-96 overflow-y-auto';
+                searchInput.parentNode.appendChild(dropdown);
+            }
+
+            if (!dropdown) return;
+
+            if (!query || query.trim() === '') {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const jugadoresCoincidentes = getJugadores().filter(j => 
+                j.nombre.toLowerCase().includes(q) || 
+                j.numero.toString().includes(q) ||
+                j.equipo.toLowerCase().includes(q) ||
+                j.posicion.toLowerCase().includes(q)
+            ).slice(0, 5);
+            
+            const equiposCoincidentes = LIGA_DATA.equipos.filter(e => 
+                e.nombre.toLowerCase().includes(q) || 
+                e.ciudad.toLowerCase().includes(q) ||
+                e.abreviatura.toLowerCase().includes(q)
+            ).slice(0, 3);
+
+            if (jugadoresCoincidentes.length === 0 && equiposCoincidentes.length === 0) {
+                dropdown.innerHTML = `<div class="p-4 text-xs text-slate-500 text-center">No se encontraron resultados para "${query}"</div>`;
+                dropdown.classList.remove('hidden');
+                return;
+            }
+
+            let html = '';
+            if (equiposCoincidentes.length > 0) {
+                html += `<div class="px-3 py-1.5 bg-slate-100 text-[10px] font-extrabold text-orange-600 uppercase tracking-wider">Equipos</div>`;
+                html += equiposCoincidentes.map(e => `
+                    <div class="p-3 hover:bg-slate-100 cursor-pointer flex items-center justify-between border-b border-slate-200" onclick="abrirDetalleEquipo('${e.nombre}'); ocultarBusqueda(); if(${isMobile}){ toggleMobileMenu(); }">
+                        <span class="font-bold text-slate-900 text-sm">${e.nombre}</span>
+                        <span class="text-xs text-slate-500">${e.ciudad}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (jugadoresCoincidentes.length > 0) {
+                html += `<div class="px-3 py-1.5 bg-slate-100 text-[10px] font-extrabold text-orange-600 uppercase tracking-wider">Jugadores</div>`;
+                html += jugadoresCoincidentes.map(j => `
+                    <div class="p-3 hover:bg-slate-100 cursor-pointer flex items-center justify-between border-b border-slate-200" onclick="abrirPerfilJugador(${j.id}); ocultarBusqueda(); if(${isMobile}){ toggleMobileMenu(); }">
+                        <div>
+                            <div class="font-bold text-slate-900 text-sm">${j.nombre}</div>
+                            <div class="text-xs text-slate-500">#${j.numero} • ${j.equipo}</div>
+                        </div>
+                        <span class="text-xs font-black text-orange-600">${j.puntos} PTS</span>
+                    </div>
+                `).join('');
+            }
+
+            dropdown.innerHTML = html;
+            dropdown.classList.remove('hidden');
+        }
+
+        function ocultarBusqueda() {
+            const dropdown = document.getElementById('searchResults');
+            if (dropdown) dropdown.classList.add('hidden');
+            const mobileDropdown = document.getElementById('mobileSearchResults');
+            if (mobileDropdown) mobileDropdown.classList.add('hidden');
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = '';
+        }
+
+        // Modal Perfil de Jugador
+        function abrirPerfilJugador(id) {
+            const j = getJugadores().find(item => item.id === id);
+            if (!j) return;
+
+            const modal = document.getElementById('modalJugador');
+            const content = document.getElementById('modalJugadorContent');
+            const totalMvps = calcularMVPsJugador(j.nombre);
+
+            content.innerHTML = `
+                <div class="p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-4">
+                        ${getAvatarHTML(j.nombre, '#f97316', 'w-16 h-16 sm:w-20 sm:h-20')}
+                        <div class="min-w-0">
+                            <span class="px-3 py-1 rounded-full text-xs font-black bg-orange-500/10 text-orange-600 border border-orange-500/30">#${j.numero} • ${j.posicion}</span>
+                            <h3 class="text-xl sm:text-3xl font-black text-slate-900 mt-2 truncate">${j.nombre}</h3>
+                            <p class="text-sm font-semibold text-slate-500">${j.equipo}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                            <span class="text-xl sm:text-2xl font-black text-orange-600">${j.puntos}</span>
+                            <p class="text-[10px] uppercase text-slate-500 font-bold mt-1">Puntos Totales</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                            <span class="text-xl sm:text-2xl font-black text-slate-800">${calcularPPG(j.puntos, j.partidos)}</span>
+                            <p class="text-[10px] uppercase text-slate-500 font-bold mt-1">Puntos / Partido</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                            <span class="text-xl sm:text-2xl font-black text-slate-800">${j.partidos}</span>
+                            <p class="text-[10px] uppercase text-slate-500 font-bold mt-1">Partidos Jugados</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                            <span class="text-xl sm:text-2xl font-black text-amber-500">${totalMvps}</span>
+                            <p class="text-[10px] uppercase text-slate-500 font-bold mt-1">Premios MVP</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function cerrarModalJugador() {
+            document.getElementById('modalJugador').classList.add('hidden');
+        }
+
+        // Modal Detalle de Equipo
+        function abrirDetalleEquipo(nombreEquipo) {
+            const eq = LIGA_DATA.equipos.find(e => e.nombre === nombreEquipo);
+            if (!eq) return;
+
+            const jugadoresEq = getJugadores().filter(j => j.equipo === eq.nombre);
+            const modal = document.getElementById('modalEquipo');
+            const content = document.getElementById('modalEquipoContent');
+
+            content.innerHTML = `
+                <div class="p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-black text-xl sm:text-2xl text-white shadow-md flex-shrink-0" style="background: linear-gradient(135deg, ${eq.color}, #0f172a)">
+                            ${eq.abreviatura}
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs uppercase font-extrabold text-orange-600">${eq.ciudad}</span>
+                            <h3 class="text-xl sm:text-3xl font-black text-slate-900 truncate">${eq.nombre}</h3>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-extrabold text-orange-600 uppercase tracking-wider">Plantilla de Jugadores</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm whitespace-nowrap">
+                                <thead>
+                                    <tr class="text-xs text-slate-500 border-b border-slate-200 bg-slate-100">
+                                        <th class="py-2.5 px-3">#</th>
+                                        <th class="py-2.5 px-3">JUGADOR</th>
+                                        <th class="py-2.5 px-3">POSICIÓN</th>
+                                        <th class="py-2.5 px-3 text-center">PTS</th>
+                                        <th class="py-2.5 px-3 text-center">PPG</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    ${jugadoresEq.map(j => `
+                                        <tr class="hover:bg-slate-50 cursor-pointer" onclick="cerrarModalEquipo(); abrirPerfilJugador(${j.id});">
+                                            <td class="py-2.5 px-3 font-black text-orange-600">#${j.numero}</td>
+                                            <td class="py-2.5 px-3 font-bold text-slate-900 truncate max-w-[140px] sm:max-w-none">${j.nombre}</td>
+                                            <td class="py-2.5 px-3 text-slate-500">${j.posicion}</td>
+                                            <td class="py-2.5 px-3 text-center font-black text-orange-600">${j.puntos}</td>
+                                            <td class="py-2.5 px-3 text-center text-slate-600">${calcularPPG(j.puntos, j.partidos)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function cerrarModalEquipo() {
+            document.getElementById('modalEquipo').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
